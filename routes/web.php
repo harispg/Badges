@@ -26,3 +26,4 @@ Route::get('badges/create', 'BadgesController@create')->name('createBadge');
 Route::post('badges/create', 'BadgesController@store')->name('storeBadge');
 Route::get('badges', 'BadgesController@index')->name('allBadges');
 Route::get('badges/{badge}', 'BadgesController@show')->name('showBadge');
+Route::post('photos/{badge}', 'PhotosController@store')->name('storePhoto');

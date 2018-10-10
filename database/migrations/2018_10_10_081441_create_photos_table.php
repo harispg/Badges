@@ -18,7 +18,7 @@ class CreatePhotosTable extends Migration
             $table->integer('badge_id')->unsigned();
             $table->foreign('badge_id')->references('id')->on('badges')->onDelete('cascade');
 
-            $table->string('name')
+            $table->string('name');
             $table->string('path');
             $table->string('thumbnail_path');
 
