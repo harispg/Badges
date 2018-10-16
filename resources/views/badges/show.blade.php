@@ -18,15 +18,24 @@
 
 	</div>
 	<div class="col-md-8">
-
-			<form action="{{route('storePhoto', ['badge' => $badge])}}" class="dropzone" id="addPhotosToBadge">
-
-			@csrf
-
-		</form>
-
-
-	</div>
+      @foreach($badge->photos->chunk(4) as $set)
+        <div class="row">
+          @foreach ($set as $photo)
+            <div class="col-md-3 gallery__image">
+              <a href="/{{$photo->path}}"  data-lity>
+                <img src="/{{ $photo->thumbnail_path}}">
+              </a>
+            </div>
+          @endforeach
+        </div>
+      @endforeach
+      @can('add-photos')
+         <hr>
+         <form id="addPhotosToBadge" class="dropzone" action="{{route('storePhoto', ['badge' => $badge])}}" method="post">
+           {{ csrf_field() }}
+         </form>
+       @endcan
+    </div>
 </div>
 @endsection
 

@@ -18,4 +18,5 @@ class Badge extends Model
     {
     	$this->photos()->save($photo);
     }
+
 }

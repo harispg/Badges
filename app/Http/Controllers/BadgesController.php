@@ -31,7 +31,11 @@ class BadgesController extends Controller
      */
     public function create()
     {
-        return view('badges.create');
+        if(\Gate::allows('add-photos')){
+
+            return view('badges.create');
+        }
+        return abort(403, 'You are not allowed to create a badge.');
     }
 
     /**
@@ -47,6 +51,8 @@ class BadgesController extends Controller
             'description' => 'required|min:10',
             'photo' => 'required|mimes:jpg,jpeg,png,bmp'
         ]);
+
+        Photo::makeFromFile()
 
 
         $file = $request->file('photo');
