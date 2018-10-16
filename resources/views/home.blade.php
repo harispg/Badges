@@ -8,10 +8,20 @@
 
 @section('content')
 
-<a href="{{route('createBadge')}}">Create Badge</a>
+<div class="container">
 
-<h1>HOME PAGE</h1>
+	<h1>HOME PAGE</h1>
 
+	@can('create-badges')
+	<a href="{{route('createBadge')}}"><h3>Create Badge</h3></a>
+	@endcan
+
+</div>
 @endsection
 
+@section('script')
+
+@include('flash')
+
+@endsection
       

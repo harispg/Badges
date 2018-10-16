@@ -5,4 +5,6 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
+window.swal = require('sweetalert2');
 require('./bootstrap');
+

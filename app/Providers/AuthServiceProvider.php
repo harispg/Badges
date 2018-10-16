@@ -25,7 +25,7 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::define('add-photos', function($user) {
+        Gate::define('create-badges', function($user) {
             return $user->isSuper();
         });
     }

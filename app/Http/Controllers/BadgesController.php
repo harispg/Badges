@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Badge;
+use App\Photo;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class BadgesController extends Controller
 {
@@ -31,7 +33,7 @@ class BadgesController extends Controller
      */
     public function create()
     {
-        if(\Gate::allows('add-photos')){
+        if(Gate::allows('create-badges')){
 
             return view('badges.create');
         }
@@ -52,19 +54,13 @@ class BadgesController extends Controller
             'photo' => 'required|mimes:jpg,jpeg,png,bmp'
         ]);
 
-        Photo::makeFromFile()
+        $photo = (new Photo)->makePhotoFromFile($request->file('photo'));
 
-
-        $file = $request->file('photo');
-        $name=time() . $file->getClientOriginalName();
-        $extension = $file->getClientOriginalExtension();
-        $baseDir = 'Images/Badges';
-        $file->move($baseDir, $name);
 
         Badge::create([
             'name' => $request->name,
             'description' => $request->description,
-            'photo_path' =>$baseDir . "/" . $name
+            'photo_path' =>$photo->path,
         ]);
 
         return redirect(url('/badges'));
@@ -89,7 +85,8 @@ class BadgesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $badge = Badge::find($id);
+        return view('badges.edit', compact('badge'));
     }
 
     /**
@@ -101,7 +98,23 @@ class BadgesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|min:2',
+            'description' => 'required|min:10',
+            'photo' => 'mimes:jpg,jpeg,png,bmp'
+        ]);
+
+        $badge = Badge::find($id);
+        $badge->name = $request->name;
+        $badge->description = $request->description;
+        if($request->file('photo')){
+            $photo = (new Photo)->makePhotoFromFile($request->file('photo'));
+            $badge->photo_path = $photo->path;
+        }
+        $badge->save();
+
+        return redirect()->route('showBadge', ['badge' => $badge->id]);
+        
     }
 
     /**
@@ -112,6 +125,8 @@ class BadgesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $badge = Badge::find($id);
+        $badge->delete();
+        return redirect()->route('allBadges');
     }
 }

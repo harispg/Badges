@@ -55,6 +55,8 @@ class LoginController extends Controller
         $user = Socialite::driver('github')->stateless()->user();
 
         $this->loginOrCreate($user);
+
+        flash()->success('Welcome','You are now loged in');
         return redirect()->home();
     }
 
@@ -75,6 +77,8 @@ class LoginController extends Controller
     public function logout()
     {
         auth()->logout();
+
+        flash('Loged out', 'Bye!!!');
 
         return redirect()->home();
     }
