@@ -10,7 +10,23 @@
 
 <div class="container">
 
-	<h1>HOME PAGE</h1>
+
+		@foreach($badges->chunk(4) as $set)
+			<div class="row">
+			@foreach($set as $badge)
+				<div class="col-md-3">
+
+						<a href="/badges/{{$badge->id}}">
+							<div class="thumbnail">
+								<img src="/{{$badge->photo_path}}" height="200" width="200">
+							</div>
+						</a>
+					
+				</div>
+			@endforeach
+			</div>
+		@endforeach
+
 
 	@can('create-badges')
 	<a href="{{route('createBadge')}}"><h3>Create Badge</h3></a>

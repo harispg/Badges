@@ -27,7 +27,8 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
+    
 
     /**
      * Create a new controller instance.
@@ -57,7 +58,7 @@ class LoginController extends Controller
         $this->loginOrCreate($user);
 
         flash()->success('Welcome','You are now loged in');
-        return redirect()->home();
+        return redirect()->back();
     }
 
     public function loginOrCreate($gitUser)
