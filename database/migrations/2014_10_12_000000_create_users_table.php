@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->boolean('superAdmin')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
-            $table->string('git_id')->nullable();
+            $table->string('provided_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

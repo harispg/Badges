@@ -40,7 +40,7 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    public function redirectToProvider()
+    public function redirectToGitHub()
     {
 
         return Socialite::driver('github')->redirect();
@@ -51,7 +51,7 @@ class LoginController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function handleProviderCallback()
+    public function handleGitHubCallback()
     {
         $user = Socialite::driver('github')->stateless()->user();
 
@@ -61,17 +61,42 @@ class LoginController extends Controller
         return redirect()->back();
     }
 
-    public function loginOrCreate($gitUser)
+    public function redirectToFacebook()
     {
-        $user = User::where('email', $gitUser->getEmail())->first();
+
+        return Socialite::driver('facebook')->redirect();
+    }
+
+    /**
+     * Obtain the user information from GitHub.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function handleFacebookCallback()
+    {
+        $user = Socialite::driver('facebook')->stateless()->user();
+
+        $this->loginOrCreate($user);
+
+        flash()->success('Welcome','You are now loged in');
+        return redirect()->back();
+    }
+    
+
+    public function loginOrCreate($providedUser)
+    {
+        $user = User::where('email', $providedUser->getEmail())->first();
+
 
         if(! $user){
             $user = User::create([
-                'email' => $gitUser->getEmail(),
-                'name' => $gitUser->getName(),
-                'git_id' => $gitUser->getId(),
+                'email' => $providedUser->getEmail(),
+                'name' => $providedUser->getName(),
+                'provided_id' => $providedUser->getId(),
             ]);
         }
+
+        flash()->success('Loged In', 'You are now loged in!');
         auth()->login($user);
     }
 

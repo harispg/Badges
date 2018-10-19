@@ -60,6 +60,10 @@
                                     {{ __('Login with GitHub') }}
                                 </a>
 
+                                <a class="btn btn-primary" href="{{route('facebookLogin')}}">
+                                    {{ __('Login with Facebook') }}
+                                </a>
+
                                 <a class="btn btn-link" href="{{ route('password.request') }}">
                                     {{ __('Forgot Your Password?') }}
                                 </a>

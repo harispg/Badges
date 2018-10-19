@@ -17,8 +17,10 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('login/github', 'Auth\LoginController@redirectToProvider')->name('githubLogin');
-Route::get('login/github/callback', 'Auth\LoginController@handleProviderCallback');
+Route::get('login/github', 'Auth\LoginController@redirectToGitHub')->name('githubLogin');
+Route::get('login/github/callback', 'Auth\LoginController@handleGitHubCallback');
+Route::get('login/facebook', 'Auth\LoginController@redirectToFacebook')->name('facebookLogin');
+Route::get('login/facebook/callback', 'Auth\LoginController@handleFacebookCallback');
 
 Route::get('badges', 'BadgesController@index')->name('allBadges');
 Route::get('badges/create', 'BadgesController@create')->name('createBadge');
