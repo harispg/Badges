@@ -30,3 +30,5 @@ Route::post('photos/{badge}', 'PhotosController@store')->name('storePhoto');
 Route::get('badges/{id}/edit', 'BadgesController@edit')->name('editBadge');
 Route::PATCH('badges/{id}/edit', 'BadgesController@update')->name('updateBadge');
 Route::DELETE('badges/{id}/delete', 'BadgesController@destroy')->name('deleteBadge');
+
+Route::post('badges/{badge}/comments', 'CommentsController@store')->name('addComment');

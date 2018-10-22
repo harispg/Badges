@@ -106,6 +106,6 @@ class LoginController extends Controller
 
         flash('Loged out', 'Bye!!!');
 
-        return redirect()->home();
+        return redirect()->back();
     }
 }
