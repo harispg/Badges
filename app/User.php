@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Comment;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -32,5 +33,10 @@ class User extends Authenticatable
 
     public function isSuper(){
         return $this->superAdmin;
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
     }
 }
