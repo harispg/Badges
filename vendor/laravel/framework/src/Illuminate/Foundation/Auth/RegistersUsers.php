@@ -2,6 +2,7 @@
 
 namespace Illuminate\Foundation\Auth;
 
+use App\Mail\WelcomeAgain;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Events\Registered;
@@ -31,6 +32,8 @@ trait RegistersUsers
         $this->validator($request->all())->validate();
 
         event(new Registered($user = $this->create($request->all())));
+
+        \Mail::to($user)->send(new WelcomeAgain($user));
 
         $this->guard()->login($user);
 

@@ -32,3 +32,10 @@ Route::PATCH('badges/{id}/edit', 'BadgesController@update')->name('updateBadge')
 Route::DELETE('badges/{id}/delete', 'BadgesController@destroy')->name('deleteBadge');
 
 Route::post('badges/{badge}/comments', 'CommentsController@store')->name('addComment');
+
+
+Route::get('/mailable', function () {
+    $user = App\User::find(1);
+
+    return new App\Mail\WelcomeAgain($user);
+});
