@@ -34,3 +34,13 @@ $factory->define(App\Comment::class, function (Faker $faker) {
     ];
 });
 
+$factory->define(App\Badge::class, function (Faker $faker) {
+
+    return [
+        'name' => $faker->word,
+        'description' => $faker->paragraph,
+        'photo_path' => 'Images/Badges/dummyPics/' . (rand(1,20)) . '.jpg',      
+    ];
+});
+
+
