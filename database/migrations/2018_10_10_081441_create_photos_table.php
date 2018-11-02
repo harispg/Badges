@@ -21,6 +21,7 @@ class CreatePhotosTable extends Migration
             $table->string('name');
             $table->string('path');
             $table->string('thumbnail_path');
+            $table->boolean('main_picture')->default(false);
 
             $table->timestamps();
 

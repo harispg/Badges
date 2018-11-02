@@ -17,7 +17,7 @@ class CreateBadgesTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->text('description');
-            $table->string('photo_path');
+            $table->string('main_photo')->nullable();
             $table->timestamps();
         });
     }

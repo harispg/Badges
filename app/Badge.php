@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Badge extends Model
 {
-    protected $fillable = ['name', 'description', 'photo_path'];
+    protected $fillable = ['name', 'description'];
 
     public function photos()
     {
@@ -29,6 +29,15 @@ class Badge extends Model
             'body' => $body,
             'user_id' => auth()->id(),
         ]);
+    }
+
+    public function mainPhoto()
+    {
+        foreach ($this->photos as $photo) {
+            if($photo->main_picture){
+                return $photo;
+            }
+        }
     }
 
 }

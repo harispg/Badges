@@ -2,18 +2,19 @@
 
 namespace App;
 
-use App\Badge;
-use Illuminate\Database\Eloquent\Model;
-use Iluminate\Http\UploadedFile;
 use Image;
+use App\Badge;
+use Iluminate\Http\UploadedFile;
+use Illuminate\Support\Facades\File;
+use Illuminate\Database\Eloquent\Model;
 
 class Photo extends Model
 {
 	protected $baseDir = 'Images/Badges';
 
-    protected $fillable=['name', 'path', 'thumbnail_path', 'badge_id'];
+    protected $fillable=['name', 'path', 'thumbnail_path', 'badge_id', 'main_picture'];
 
-    public function badges(){	
+    public function badge(){	
     	return $this->belongsTo(Badge::class);
     }
 
@@ -28,6 +29,28 @@ class Photo extends Model
 
     	return $this;
 
+    }
+
+    public function setAsMain(){
+
+        if($oldMain = $this->badge->photos->where('main_picture',true)->first()){
+            $oldMain->main_picture = false;
+            $oldMain->save();
+        }
+        $this->main_picture = true;
+
+    }
+
+    public function deletePhotoAndFile(){
+        if($this->main_picture){
+            $newMainPhoto = $this->badge->photos->where('id', $this->id+1)->first();
+            $newMainPhoto->setAsMain();
+            $newMainPhoto->save();
+        }
+
+        File::delete([$this->path, $this->thumbnail_path]);
+
+        $this->delete();
     }
 
 

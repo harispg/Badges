@@ -10,6 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+use Illuminate\Support\Facades\Cache;
 
 Route::get('/', 'HomeController@index')->name('home');
 
@@ -24,18 +25,20 @@ Route::get('login/facebook/callback', 'Auth\LoginController@handleFacebookCallba
 
 Route::get('badges', 'BadgesController@index')->name('allBadges');
 Route::get('badges/create', 'BadgesController@create')->name('createBadge');
-Route::post('badges/create', 'BadgesController@store')->name('storeBadge');
+Route::post('badges', 'BadgesController@store')->name('storeBadge');
 Route::get('badges/{badge}', 'BadgesController@show')->name('showBadge');
-Route::post('photos/{badge}', 'PhotosController@store')->name('storePhoto');
 Route::get('badges/{id}/edit', 'BadgesController@edit')->name('editBadge');
-Route::PATCH('badges/{id}/edit', 'BadgesController@update')->name('updateBadge');
+Route::PATCH('badges/{id}', 'BadgesController@update')->name('updateBadge');
 Route::DELETE('badges/{id}/delete', 'BadgesController@destroy')->name('deleteBadge');
+Route::post('photos/{badge}', 'PhotosController@store')->name('storePhoto');
+Route::DELETE('photos/{photo}', 'PhotosController@destroy')->name('deletePhoto');
 
 Route::post('badges/{badge}/comments', 'CommentsController@store')->name('addComment');
 
 
-Route::get('/mailable', function () {
-    $user = App\User::find(1);
-
-    return new App\Mail\WelcomeAgain($user);
+Route::get('ajax', function(){
+	return view('ajax');
 });
+
+Route::post('postajax', 'AjaxController@post');
+Route::post('ajaxPhoto', 'AjaxController@photo');

@@ -57,11 +57,12 @@ class BadgesController extends Controller
         $photo = (new Photo)->makePhotoFromFile($request->file('photo'));
 
 
-        Badge::create([
+        $badge = Badge::create([
             'name' => $request->name,
             'description' => $request->description,
-            'photo_path' =>$photo->path,
         ]);
+
+        $badge->savePhoto($photo->setAsMain());
 
         return redirect(url('/badges'));
     }

@@ -7,6 +7,8 @@ use App\Badge;
 use App\Photo;
 use Illuminate\Http\Request;
 
+
+
 class PhotosController extends Controller
 {
     public function store(Request $request, Badge $badge){
@@ -20,6 +22,13 @@ class PhotosController extends Controller
         $badge->savePhoto($photo);
 
     	return 'done';
+    }
+
+    public function destroy(Photo $photo){
+
+        $photo->deletePhotoAndFile();
+
+    	return redirect()->back();
     }
 
 

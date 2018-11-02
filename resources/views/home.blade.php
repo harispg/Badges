@@ -18,7 +18,7 @@
 
 						<a href="/badges/{{$badge->id}}">
 							<div class="thumbnail">
-								<img src="/{{$badge->photo_path}}" height="200" width="200">
+								<img src="/{{$badge->mainPhoto()->thumbnail_path}}">
 							</div>
 						</a>
 					
