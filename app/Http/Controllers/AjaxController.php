@@ -4,9 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Photo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+
 
 class AjaxController extends Controller
 {
+    public function __construct(){
+        $this->middleware('auth');
+    }
     
     public function post(Request $request){
 
@@ -19,13 +24,13 @@ class AjaxController extends Controller
 
     }
 
-    public function photo(Request $request){
 
-    	$photo = Photo::find($request->photo);
-    	$photo->setAsMain();
-    	$photo->save();
-
-    	return response()->json($photo);
-
+    public function changeAvatar(Request $request){
+        if(Gate::allows('create-badges')){
+        	$photo = Photo::find($request->photo);
+        	$photo->setAsMain();
+    	   return response()->json($photo);
+        }
+        return abort(403, 'You have no permission to change Badges');
     }
 }

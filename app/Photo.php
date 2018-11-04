@@ -31,19 +31,27 @@ class Photo extends Model
 
     }
 
+    /* In If condition finds current Avatar(main_picture). 
+       Than removes the main_picture attribute from it and saves new one*/
+
     public function setAsMain(){
 
-        if($oldMain = $this->badge->photos->where('main_picture',true)->first()){
+        if($oldMain = Photo::where('main_picture', true)->first()){
+
             $oldMain->main_picture = false;
             $oldMain->save();
         }
         $this->main_picture = true;
+        $this->save();
 
     }
+    
+
+    /* Deleting photo and removing files*/
 
     public function deletePhotoAndFile(){
         if($this->main_picture){
-            $newMainPhoto = $this->badge->photos->where('id', $this->id+1)->first();
+            $newMainPhoto = $this->badge->photos->where('main_picture', false)->first();
             $newMainPhoto->setAsMain();
             $newMainPhoto->save();
         }

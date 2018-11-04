@@ -64,16 +64,26 @@
       @foreach($badge->photos->chunk(4) as $set)
         <div class="row">
           @foreach ($set as $photo)
-            <div class="col-md-3 gallery__image">
-              <a href="/{{$photo->path}}"  data-lity>
-                <img src="/{{ $photo->thumbnail_path}}" id="photo{{$photo->id}}">
-              </a><br>
-              <form method="POST" action="{{route('deletePhoto', ['photo' => $photo->id])}}">
-              	@csrf
-              	@method('DELETE')
-              	<button type="submit">Delete this photo</button>
-              </form>
-              <input type="radio" class="radio-button" name="mainPhoto" data-photo="{{$photo->id}}"{{$photo->main_picture?'checked' : ''}}>Set as main picture<br>
+            <div class="col-md-3">
+              <div class="card mb-4 shadow-sm">
+                <img class="card-img-top" src="/{{ $photo->thumbnail_path}}" id="photo{{$photo->id}}">
+                <div class="card-body">
+                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                    	@can('create-badges')
+			              <form method="POST" action="{{route('deletePhoto', ['photo' => $photo->id])}}">
+			              	@csrf
+			              	@method('DELETE')
+			              	<button type="submit" class="btn btn-sm btn-outline-secondary">Delete photo</button>
+			              </form>
+			              	<button type="submit" class="check btn btn-sm btn-outline-secondary {{$photo->main_picture?"active" : ""}}" data-photo="{{$photo->id}}">Set Avatar</button>
+              			@endcan
+                    </div>
+                    <small class="text-muted">9 mins</small>
+                  </div>
+                </div>
+              </div>
             </div>
           @endforeach
         </div>
@@ -100,9 +110,11 @@
 	<script type="text/javascript">
 		$(document).ready(function(){
 			var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-			$(".radio-button").click(function(){
+			$(".check").click(function(){
 				var photoId = "#photo" + $(this).data("photo");
 				var realPhotoId = $(this).data("photo");
+				$(".btn.btn-sm.btn-outline-secondary.active").removeClass('btn btn-sm btn-outline-secondary active').addClass('btn btn-sm btn-outline-secondary');
+				$(this).removeClass('btn btn-sm btn-outline-secondary').addClass('btn btn-sm btn-outline-secondary active');	
 				$.ajax({
 					url: '/ajaxPhoto',
 					method: 'POST',
