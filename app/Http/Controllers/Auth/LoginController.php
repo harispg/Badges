@@ -40,26 +40,26 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    public function redirectToGitHub()
+    /*public function redirectToGitHub()
     {
 
         return Socialite::driver('github')->redirect();
     }
 
-    /**
+    *
      * Obtain the user information from GitHub.
      *
      * @return \Illuminate\Http\Response
-     */
+     
     public function handleGitHubCallback()
     {
         $user = Socialite::driver('github')->stateless()->user();
 
         $this->loginOrCreate($user);
 
-        flash()->success('Welcome','You are now loged in');
         return redirect()->back();
-    }
+
+    }*/
 
     public function redirectToFacebook()
     {
@@ -77,8 +77,6 @@ class LoginController extends Controller
         $user = Socialite::driver('facebook')->stateless()->user();
 
         $this->loginOrCreate($user);
-
-        flash()->success('Welcome','You are now loged in');
         return redirect()->back();
     }
     
@@ -87,24 +85,22 @@ class LoginController extends Controller
     {
         $user = User::where('email', $providedUser->getEmail())->first();
 
-
-        if(! $user){
+        if(!$user){
             $user = User::create([
                 'email' => $providedUser->getEmail(),
                 'name' => $providedUser->getName(),
                 'provided_id' => $providedUser->getId(),
             ]);
         }
-
-        flash()->success('Loged In', 'You are now loged in!');
         auth()->login($user);
+        flash()->success('Welcome','You are now loged in');        
     }
 
     public function logout()
     {
         auth()->logout();
 
-        flash('Loged out', 'Bye!!!');
+        flash()->success('Loged out', 'Bye!!!');
 
         return redirect()->back();
     }

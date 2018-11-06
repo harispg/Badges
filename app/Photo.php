@@ -51,7 +51,7 @@ class Photo extends Model
 
     public function deletePhotoAndFile(){
         if($this->main_picture){
-            $newMainPhoto = $this->badge->photos->where('main_picture', false)->first();
+            $newMainPhoto = Photo::where('main_picture', false)->first();
             $newMainPhoto->setAsMain();
             $newMainPhoto->save();
         }

@@ -56,9 +56,9 @@
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Login') }}
                                 </button>
-                                <a class="btn btn-primary" href="{{route('githubLogin')}}">
+                                {{-- <a class="btn btn-primary" href="{{route('githubLogin')}}">
                                     {{ __('Login with GitHub') }}
-                                </a>
+                                </a> --}}
 
                                 <a class="btn btn-primary" href="{{route('facebookLogin')}}">
                                     {{ __('Login with Facebook') }}

@@ -11,6 +11,11 @@
           <ul class="list-unstyled">
             <li><a href="{{route('login')}}" class="text-white">Login</a></li>
             <li><a href="{{route('register')}}" class="text-white">Register</a></li>
+            <li>
+              <a class="btn btn-primary" href="{{route('facebookLogin')}}">
+                {{ __('Login with Facebook') }}
+              </a>
+            </li>
             <li><a href="#" class="text-white">Follow on Twitter</a></li>
             <li><a href="#" class="text-white">Like on Facebook</a></li>
           </ul>

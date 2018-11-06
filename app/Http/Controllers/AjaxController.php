@@ -33,4 +33,14 @@ class AjaxController extends Controller
         }
         return abort(403, 'You have no permission to change Badges');
     }
+
+    public function deletePhoto(Request $request){
+        if(Gate::allows('create-badges')){
+            $photo = Photo::find($request->photo);
+            $photo->deletePhotoAndFile();
+            $remainingPhotos = Photo::all();
+            return response()->json($remainingPhotos);
+        }
+        return abort(403, 'You have no permission to change Badges');
+    }
 }

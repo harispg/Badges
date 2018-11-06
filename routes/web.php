@@ -42,3 +42,4 @@ Route::get('ajax', function(){
 
 Route::post('postajax', 'AjaxController@post');
 Route::post('ajaxPhoto', 'AjaxController@changeAvatar');
+Route::post('ajaxDeletePhoto', 'AjaxController@deletePhoto');

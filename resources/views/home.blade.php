@@ -35,9 +35,4 @@
 </div>
 @endsection
 
-@section('script')
-
-@include('flash')
-
-@endsection
       
