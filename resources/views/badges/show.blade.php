@@ -71,7 +71,7 @@
 			              	@method('DELETE')
 			              	<button type="button" class="delete btn btn-sm btn-outline-secondary" data-photo="{{$photo->id}}">Delete photo</button>
 			              </form>
-			              	<button type="submit" class="check btn btn-sm btn-outline-primary {{$photo->main_picture?"active" : ""}}" data-photo="{{$photo->id}}">Set Avatar</button>
+			              	<button type="button" class="check btn btn-sm btn-outline-primary {{$photo->main_picture?"active" : ""}}" data-photo="{{$photo->id}}">Set Avatar</button>
               			@endcan
                     </div>
                     <small class="text-muted">9 mins</small>
@@ -82,92 +82,18 @@
           @endforeach
         </div>
       @endforeach
-      @can('create-badges')
+    </div>
+    <div class="col-md-8 offset-4">
+    	@can('create-badges')
          <hr>
          <form id="addPhotosToBadge" class="dropzone" action="{{route('storePhoto', ['badge' => $badge])}}" method="post">
            {{ csrf_field() }}
          </form>
        @endcan
-    </div>
+   </div>
 </div>
 @endsection
 
 @section('script')
-	<script src="/js/dropzone.js"></script>
-	<script type="text/javascript">
-		Dropzone.options.addPhotosToBadge = {
-		  paramName: "photo", // The name that will be used to transfer the file
-		  maxFilesize: 2, // MB
-		  acceptedFiles: '.jpg,.jpeg,.bmp,npg',
-		};
-	</script>
-	<script type="text/javascript">
-		$(document).ready(function(){
-			var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-			$(".check").on('click',function(){
-				var photoId = "#photo" + $(this).data("photo");
-				var realPhotoId = $(this).data("photo");
-				$(".active").removeClass('btn btn-sm btn-outline-primary active').addClass('btn btn-sm btn-outline-primary');
-				$(this).removeClass('btn btn-sm btn-outline-primary').addClass('btn btn-sm btn-outline-primary active');	
-				$.ajax({
-					url: '/ajaxPhoto',
-					method: 'POST',
-					data: {_token: CSRF_TOKEN, photo: realPhotoId},
-					success: function(photo){
-						$("#avatar").attr("src", "/"+photo.thumbnail_path);
-					} 
-				});
-			});
-		});
-	</script>
-	<script type="text/javascript">
-		$(document).ready(function(){
-			var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-			$(".delete").on("click",".delete",function(){
-				console.log('clicked');
-				var realPhotoId = $(this).data("photo");
-				$.ajax({
-					url: '/ajaxDeletePhoto',
-					method: 'POST',
-					data: {_token: CSRF_TOKEN, photo: realPhotoId},
-					success: function(photos){
-						renderPictures(photos);
-					}
-				});
-			});
-
-			function renderPictures(photos){
-				$("#photoGrid").html("");
-						var fullRows = Math.floor(photos.length / 4);
-						var leftOver = photos.length - fullRows*4;
-						var photoNumber = 0;
-						if(leftOver>0){
-							var lastRow=1;
-						}else{
-							var lastRow=0;
-						}
-						for (var rows = 0; rows < fullRows+lastRow; rows++) {
-							$("#photoGrid").append("<div class='row' id='photoRow'>");
-								console.log("red: "+rows);
-							if(rows == fullRows){
-								for (j = 0; j<leftOver; j++) {
-									console.log("slika: "+ j);
-									$("#photoRow").append("<div class='col-md-3'><div class='card mb-4 shadow-sm'><img class='card-img-top' src='/"+photos[photoNumber].thumbnail_path+"'id='"+photos[photoNumber].id+"'><div class='card-body'><p class='card-text'>This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p><div class='d-flex justify-content-between align-items-center'><div class='btn-group'><button type='button' class='delete btn btn-sm btn-outline-secondary' data-photo='"+photos[photoNumber].id+"'>Delete photo</button><button type='submit' class='check btn btn-sm btn-outline-primary' data-photo='"+photos[photoNumber].id+"'>Set Avatar</button></div><small class='text-muted'>9 mins</small> </div></div></div></div>");
-									if(j=leftOver-1){
-										$("#photoGrid").append("</div></div>");
-									}
-									photoNumber++;
-								}
-							}else{
-								for (j = 0; j<4; j++) {
-									console.log("slika: "+ j);
-									$("#photoRow").append("<div class='col-md-3'><div class='card mb-4 shadow-sm'><img class='card-img-top' src='/"+photos[photoNumber].thumbnail_path+"'id='"+photos[photoNumber].id+"'><div class='card-body'><p class='card-text'>This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p><div class='d-flex justify-content-between align-items-center'><div class='btn-group'><button type='button' class='delete btn btn-sm btn-outline-secondary' data-photo='"+photos[photoNumber].id+"'>Delete photo</button><button type='submit' class='check btn btn-sm btn-outline-primary' data-photo='"+photos[photoNumber].id+"'>Set Avatar</button></div><small class='text-muted'>9 mins</small> </div></div></div></div>");
-									photoNumber++;
-								}
-							}
-						    
-						}
-			}
-		});
-	</script>
+	@include('scripts')
 @endsection
