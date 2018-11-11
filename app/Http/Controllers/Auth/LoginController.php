@@ -28,6 +28,10 @@ class LoginController extends Controller
      * @var string
      */
     protected $redirectTo = '/home';
+
+    protected function redirectTo(){
+        return redirect()->intended();
+    }
     
 
     /**
@@ -77,7 +81,7 @@ class LoginController extends Controller
         $user = Socialite::driver('facebook')->stateless()->user();
 
         $this->loginOrCreate($user);
-        return redirect()->back();
+        return redirect()->intended();
     }
     
 

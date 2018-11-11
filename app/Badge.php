@@ -15,8 +15,11 @@ class Badge extends Model
     	return $this->hasMany(Photo::class);
     }
 
-    public function savePhoto($photo)
-    {
+    public function savePhoto($photo, $avatar = null)
+    {   
+        if($avatar){
+            $photo->main_picture = true;
+        }
     	$this->photos()->save($photo);
     }
 

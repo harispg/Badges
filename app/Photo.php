@@ -36,8 +36,7 @@ class Photo extends Model
 
     public function setAsMain(){
 
-        if($oldMain = Photo::where('main_picture', true)->first()){
-
+        if($oldMain = $this->badge->photos->where('main_picture', true)->first()){
             $oldMain->main_picture = false;
             $oldMain->save();
         }
@@ -50,15 +49,20 @@ class Photo extends Model
     /* Deleting photo and removing files*/
 
     public function deletePhotoAndFile(){
-        if($this->main_picture){
-            $newMainPhoto = Photo::where('main_picture', false)->first();
-            $newMainPhoto->setAsMain();
-            $newMainPhoto->save();
+        if(count($this->badge->photos) != 1){    
+            if($this->main_picture){
+                $newMainPhoto = $this->badge->photos->where('main_picture', false)->first();
+                if($newMainPhoto != null){
+                    $newMainPhoto->setAsMain();
+                    $newMainPhoto->save();
+                }
+            }
+
+            File::delete([$this->path, $this->thumbnail_path]);
+
+            $this->delete();
         }
 
-        File::delete([$this->path, $this->thumbnail_path]);
-
-        $this->delete();
     }
 
 

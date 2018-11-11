@@ -54,15 +54,18 @@ class BadgesController extends Controller
             'photo' => 'required|mimes:jpg,jpeg,png,bmp'
         ]);
 
-        $photo = (new Photo)->makePhotoFromFile($request->file('photo'));
-
 
         $badge = Badge::create([
             'name' => $request->name,
             'description' => $request->description,
         ]);
 
-        $badge->savePhoto($photo->setAsMain());
+        $photo = (new Photo)->makePhotoFromFile($request->file('photo'));
+
+        $badge->savePhoto($photo, true);
+
+        /*$photo->setAsMain();*/
+
 
         return redirect(url('/badges'));
     }
