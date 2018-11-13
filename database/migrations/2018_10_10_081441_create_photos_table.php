@@ -26,6 +26,13 @@ class CreatePhotosTable extends Migration
             $table->timestamps();
 
         });
+
+        Schema::create('photo_user', function (Blueprint $table) {
+            $table->integer('photo_id')->unsigned();
+            $table->integer('user_id')->unsigned();
+            $table->primary(['photo_id', 'user_id']);
+
+        });
     }
 
     /**
@@ -36,5 +43,6 @@ class CreatePhotosTable extends Migration
     public function down()
     {
         Schema::dropIfExists('photos');
+        Schema::dropIfExists('photo_user');
     }
 }

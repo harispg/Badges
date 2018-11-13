@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Photo;
 use App\Comment;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -38,5 +39,9 @@ class User extends Authenticatable
     public function comments()
     {
         return $this->hasMany(Comment::class);
+    }
+
+    public function photos(){
+        return $this->belongsToMany(Photo::class);
     }
 }

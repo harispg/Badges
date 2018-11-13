@@ -23,8 +23,7 @@ $factory->define(App\User::class, function (Faker $faker) {
     ];
 });
 
-
-$factory->define(App\Comment::class, function (Faker $faker) {
+/*$factory->define(App\Comment::class, function (Faker $faker) {
     return [
     	'user_id' => function(){
     		return factory('App\User')->create()->id;
@@ -32,14 +31,32 @@ $factory->define(App\Comment::class, function (Faker $faker) {
         'body' => $faker->sentence,
         
     ];
+});*/
+
+$factory->define(App\Photo::class, function (Faker $faker){
+   static $broj = 1;
+
+    $path = 'Images/Badges/dummyPics/' . $broj . '.jpg';
+    $thumbnail_path = 'Images/Badges/dummyPics/tn-' . $broj . '.jpg';
+    $broj++;
+    if($broj>20){
+        $broj = 1;
+    }
+    return [
+        
+        'badge_id' => factory('App\Badge')->create()->id,
+        'name' => $faker->word,
+        'path' => $path,
+        'main_picture' => 1,
+        'thumbnail_path' => $thumbnail_path,
+    ];
 });
 
 $factory->define(App\Badge::class, function (Faker $faker) {
 
     return [
         'name' => $faker->word,
-        'description' => $faker->paragraph,
-        'photo_path' => 'Images/Badges/dummyPics/' . (rand(1,20)) . '.jpg',      
+        'description' => $faker->paragraph,     
     ];
 });
 

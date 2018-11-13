@@ -39,11 +39,23 @@ class AjaxController extends Controller
         if(Gate::allows('create-badges')){
             $photo = Photo::find($request->photo);
             $badgeId = $photo->badge->id;
-            $photo->deletePhotoAndFile();
+            if($lastPicture = $photo->deletePhotoAndFile());
             $badge = Badge::find($badgeId);
             $remainingPhotos = $badge->photos;
-            return response()->json($remainingPhotos);
+            return response()->json([$remainingPhotos, $lastPicture]);
         }
         return abort(403, 'You have no permission to change Badges');
+    }
+
+    public function like(Request $request){
+            $photo = Photo::find($request->photo);
+            $photo->users()->attach(auth()->user());
+           return response()->json($photo);
+    }
+
+    public function unLike(Request $request){
+            $photo = Photo::find($request->photo);
+            $photo->users()->detach(auth()->user());
+           return response()->json($photo);
     }
 }

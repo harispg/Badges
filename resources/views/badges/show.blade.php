@@ -63,7 +63,7 @@
                 <img class="card-img-top" src="/{{ $photo->thumbnail_path}}" id="photo{{$photo->id}}">
                 <div class="card-body">
                   <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                  <div class="d-flex justify-content-between align-items-center">
+                  <div class="article d-flex justify-content-between align-items-center">
                     <div class="btn-group">
                     	@can('create-badges')
 			              <form method="POST" action="{{route('deletePhoto', ['photo' => $photo->id])}}">
@@ -74,7 +74,11 @@
 			              	<button type="button" class="check btn btn-sm btn-outline-primary {{$photo->main_picture?"active" : ""}}" data-photo="{{$photo->id}}">Set Avatar</button>
               			@endcan
                     </div>
-                    <small class="text-muted">9 mins</small>
+                    @if(auth()->check())
+                    <i id="like{{$photo->id}}" data-photo="{{$photo->id}}" class="{{$photo->isLiked(auth()->id())?'fa fa-heart':'far fa-heart'}}"
+                       style="font-size:2em;color:red">
+                    </i>
+                    @endif
                   </div>
                 </div>
               </div>

@@ -3,6 +3,7 @@
 namespace App;
 
 use Image;
+use App\User;
 use App\Badge;
 use Iluminate\Http\UploadedFile;
 use Illuminate\Support\Facades\File;
@@ -16,6 +17,10 @@ class Photo extends Model
 
     public function badge(){	
     	return $this->belongsTo(Badge::class);
+    }
+
+    public function users(){
+        return $this->belongsToMany(User::class);
     }
 
     public function makePhotoFromFile($file){
@@ -61,9 +66,17 @@ class Photo extends Model
             File::delete([$this->path, $this->thumbnail_path]);
 
             $this->delete();
-        }
 
+            return true;
+        }
+        return false;
     }
 
+    public function isLiked($user){
+        if($this->users()->find($user) === null){
+            return false;
+        }
+        return true;
+    }
 
 }

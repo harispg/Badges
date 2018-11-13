@@ -30,7 +30,7 @@ class Flash{
 
   public function overlay($title, $message)
   {
-    $this->create($title, $message, 'success', 'overlay');
+    $this->create($title, $message, 'info', 'overlay');
   }
 
 }

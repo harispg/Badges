@@ -12,10 +12,10 @@
   @else
     <script type="text/javascript">
     swal({
-          title: '{{session('flash_message.title')}}',
-          text: '{{session('flash_message.message')}}',
-          type: '{{session('flash_message.level')}}',
-          confirmButtonText: 'Uredu'
+          title: "{!!session('flash_message.title')!!}",
+          text: "{!!session('flash_message.message')!!}",
+          type: "{!!session('flash_message.level')!!}",
+          confirmButtonText: 'Ok'
           })
     </script>
   @endif

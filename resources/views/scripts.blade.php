@@ -37,7 +37,10 @@
 					method: 'POST',
 					data: {_token: CSRF_TOKEN, photo: realPhotoId},
 					success: function(photos){
-						renderPictures(photos);
+						if(!photos[1]){
+							window.alert('You cannot delete last picture. Add another so you can delete this one');
+						}
+						renderPictures(photos[0]);
 					}
 				});
 			});
@@ -69,5 +72,35 @@
 					}
 					return "<div class='col-md-3' style='display:inline-block; width=25%'><div class='card mb-4 shadow-sm'><img class='card-img-top' src='/"+photo.thumbnail_path+"'id='"+photo.id+"'><div class='card-body'><p class='card-text'>This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p><div class='d-flex justify-content-between align-items-center'><div class='btn-group'><button type='button' class='delete btn btn-sm btn-outline-secondary' data-photo='"+photo.id+"'>Delete photo</button><button type='submit' class='check btn btn-sm btn-outline-primary "+flag+"' data-photo='"+photo.id+"'>Set Avatar</button></div><small class='text-muted'>9 mins</small> </div></div></div></div>";
 			}
+		});
+	</script>
+
+	<script type="text/javascript">
+		$(document).ready(function(){
+			var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+			$(".article").on('click',".far", function(){
+			var realPhotoId = $(this).data('photo');
+				$(this).removeClass("far fa-heart").addClass("fa fa-heart");
+				$.ajax({
+					url: '/ajaxLike',
+					method: 'POST',
+					data: {_token: CSRF_TOKEN, photo: realPhotoId},
+					success: function(photoId){
+					} 
+				});
+			});
+
+			$(".article").on('click',".fa", function(){
+			var realPhotoId = $(this).data('photo');
+			$(this).removeClass("fa fa-heart").addClass("far fa-heart");	
+			$.ajax({
+					url: '/ajaxUnlike',
+					method: 'POST',
+					data: {_token: CSRF_TOKEN, photo: realPhotoId},
+					success: function(photoId){
+					} 
+				});
+		});
+				
 		});
 	</script>
