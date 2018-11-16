@@ -75,7 +75,7 @@
               			@endcan
                     </div>
                     @if(auth()->check())
-                    <i id="like{{$photo->id}}" data-photo="{{$photo->id}}" class="{{$photo->isLiked(auth()->id())?'fa fa-heart':'far fa-heart'}}"
+                    <i id="like{{$photo->id}}" data-model="photo{{$photo->id}}" class="{{$photo->isLiked(auth()->id())?'fa fa-heart':'far fa-heart'}}"
                        style="font-size:2em;color:red">
                     </i>
                     @endif

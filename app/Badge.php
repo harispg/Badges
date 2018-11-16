@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\User;
 use App\Photo;
 use App\Comment;
 use Illuminate\Database\Eloquent\Model;
@@ -13,6 +14,10 @@ class Badge extends Model
     public function photos()
     {
     	return $this->hasMany(Photo::class);
+    }
+
+    public function users(){
+        return $this->belongsToMany(User::class);
     }
 
     public function savePhoto($photo, $avatar = null)
@@ -41,6 +46,13 @@ class Badge extends Model
                 return $photo;
             }
         }
+    }
+
+    public function isLiked($user){
+        if($this->users()->find($user) === null){
+            return false;
+        }
+        return true;
     }
 
 }

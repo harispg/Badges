@@ -12,3 +12,17 @@
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
+
+#usersTable{
+	margin-top:10em;
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  opacity: 0.95;
+  /* Set the fixed height of the footer here */
+  /*height: 60px;
+  line-height: 60px;*/ /* Vertically center the text there */
+}

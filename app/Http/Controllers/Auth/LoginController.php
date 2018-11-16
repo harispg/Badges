@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\User;
+use Socialite;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Socialite;
-use App\User;
 
 class LoginController extends Controller
 {
@@ -40,6 +41,7 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+
     /*public function redirectToGitHub()
     {
 
@@ -72,16 +74,16 @@ class LoginController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function handleFacebookCallback()
+    public function handleFacebookCallback(Request $request)
     {
         $user = Socialite::driver('facebook')->stateless()->user();
 
-        $this->loginOrCreate($user);
+        $this->loginOrCreate($user, $request);
         return redirect()->intended();
     }
     
 
-    public function loginOrCreate($providedUser)
+    public function loginOrCreate($providedUser, Request $request)
     {
         $user = User::where('email', $providedUser->getEmail())->first();
 
@@ -92,8 +94,18 @@ class LoginController extends Controller
                 'provided_id' => $providedUser->getId(),
             ]);
         }
+
         auth()->login($user);
+        $this->authenticated($request, $user);
         flash()->success('Welcome','You are now loged in');        
+    }
+
+    public function authenticated(Request $request, $user)
+    {
+        if(isset($user->numberOfLogins)){
+            $user->numberOfLogins++;
+            $user->save();
+        }
     }
 
     public function logout()

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Badge;
 use App\Photo;
 use App\Comment;
 use Illuminate\Notifications\Notifiable;
@@ -34,6 +35,10 @@ class User extends Authenticatable
 
     public function isSuper(){
         return $this->superAdmin;
+    }
+
+    public function badges(){
+        return $this->belongsToMany(Badge::class);
     }
 
     public function comments()

@@ -19,6 +19,12 @@ class CreateBadgesTable extends Migration
             $table->text('description');
             $table->timestamps();
         });
+
+        Schema::create('badge_user', function (Blueprint $table){
+            $table->integer('badge_id')->unsigned(); 
+            $table->integer('user_id')->unsigned();
+            $table->primary(['badge_id', 'user_id']);
+        });
     }
 
     /**
@@ -29,5 +35,6 @@ class CreateBadgesTable extends Migration
     public function down()
     {
         Schema::dropIfExists('badges');
+        Schema::dropIfExists('badge_user');
     }
 }

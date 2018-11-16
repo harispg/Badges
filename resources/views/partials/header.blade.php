@@ -32,12 +32,24 @@
         </strong>
       </a>
       @if(auth()->check())
-        <h5 class="text-light">{{auth()->user()->name}}</h5><a href="{{route('logout')}}" class="text-white" onclick="event.preventDefault(); document.getElementById('logoutForm').submit();">Logout</a>
+        <div class="text-light">{{auth()->user()->name}}</div>
+        @can('create-badges')
+          <a class="btn btn-link text-light" href="{{route('createBadge')}}">Create Badge</a>
+          <a class="btn btn-link text-light" href="{{route('userStatistics')}}">Users statistics</a>
+        @endcan
+        <div class="btn text-light" href="{{route('logout')}}" class="text-white" onclick="event.preventDefault(); document.getElementById('logoutForm').submit();">
+            Logout
+        </div>
+      @else
+        <a class="btn btn-link text-light" href="{{route('login')}}">
+            Login
+        </a>
       @endif
 
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
+      
     </div>
 
     <form method="POST" action="{{route('logout')}}" id="logoutForm" style="display:none">

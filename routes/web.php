@@ -35,13 +35,10 @@ Route::DELETE('photos/{photo}', 'PhotosController@destroy')->name('deletePhoto')
 
 Route::post('badges/{badge}/comments', 'CommentsController@store')->name('addComment');
 
-
-Route::get('ajax', function(){
-	return view('ajax');
-});
-
 Route::post('postajax', 'AjaxController@post');
 Route::post('ajaxPhoto', 'AjaxController@changeAvatar');
 Route::post('ajaxDeletePhoto', 'AjaxController@deletePhoto');
 Route::post('ajaxLike', 'AjaxController@like');
 Route::post('ajaxUnlike', 'AjaxController@unLike');
+
+Route::get('/admin/users', 'UserActionsController@index')->name('userStatistics');

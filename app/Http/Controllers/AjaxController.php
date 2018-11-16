@@ -48,14 +48,29 @@ class AjaxController extends Controller
     }
 
     public function like(Request $request){
-            $photo = Photo::find($request->photo);
-            $photo->users()->attach(auth()->user());
-           return response()->json($photo);
+
+            if(strpos($request->modelId, 'photo')){
+                dd('PHOTO');    
+                $photo = Photo::find(str_replace("photo", "", $request->modelId));
+                $photo->users()->attach(auth()->user());
+                return response()->json($photo);
+            }else{
+                $badge = Badge::find(str_replace("badge", "", $request->modelId));
+                $badge->users()->attach(auth()->user());
+                return response()->json($badge);
+            }
+
     }
 
     public function unLike(Request $request){
-            $photo = Photo::find($request->photo);
-            $photo->users()->detach(auth()->user());
-           return response()->json($photo);
+           if(strpos($request->modelId, 'photo')){
+                $photo = Photo::find(str_replace("photo", "", $request->modelId));
+                $photo->users()->detach(auth()->user());
+                return response()->json($photo);
+            }else{
+                $badge = Badge::find(str_replace("badge", "", $request->modelId));
+                $badge->users()->detach(auth()->user());
+                return response()->json($badge);
+            }
     }
 }

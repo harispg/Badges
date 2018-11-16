@@ -79,24 +79,24 @@
 		$(document).ready(function(){
 			var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 			$(".article").on('click',".far", function(){
-			var realPhotoId = $(this).data('photo');
+			var modelId = $(this).data('model');
 				$(this).removeClass("far fa-heart").addClass("fa fa-heart");
 				$.ajax({
 					url: '/ajaxLike',
 					method: 'POST',
-					data: {_token: CSRF_TOKEN, photo: realPhotoId},
+					data: {_token: CSRF_TOKEN, modelId: modelId},
 					success: function(photoId){
 					} 
 				});
 			});
 
 			$(".article").on('click',".fa", function(){
-			var realPhotoId = $(this).data('photo');
+			var modelId = $(this).data('model');
 			$(this).removeClass("fa fa-heart").addClass("far fa-heart");	
 			$.ajax({
 					url: '/ajaxUnlike',
 					method: 'POST',
-					data: {_token: CSRF_TOKEN, photo: realPhotoId},
+					data: {_token: CSRF_TOKEN, modelId: modelId},
 					success: function(photoId){
 					} 
 				});
