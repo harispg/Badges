@@ -60,11 +60,11 @@
           @foreach ($set as $photo)
             <div class="col-md-3">
               <div class="card mb-4 shadow-sm">
-                <img class="card-img-top" src="/{{ $photo->thumbnail_path}}" id="photo{{$photo->id}}">
+                {{-- <a href="/{{$photo->path}}"> --}}<img class="card-img-top" src="/{{ $photo->thumbnail_path}}" id="photo{{$photo->id}}">{{-- </a> --}}
                 <div class="card-body">
                   <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
                   <div class="article d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
+                    <div class="btn-group col-sm-6">
                     	@can('create-badges')
 			              <form method="POST" action="{{route('deletePhoto', ['photo' => $photo->id])}}">
 			              	@csrf
@@ -87,6 +87,7 @@
         </div>
       @endforeach
     </div>
+    <div class="row">
     <div class="col-md-8 offset-4">
     	@can('create-badges')
          <hr>
@@ -94,6 +95,7 @@
            {{ csrf_field() }}
          </form>
        @endcan
+   </div>
    </div>
 </div>
 @endsection

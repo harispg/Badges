@@ -15,6 +15,7 @@ class Photo extends Model
 
     protected $fillable=['name', 'path', 'thumbnail_path', 'badge_id', 'main_picture'];
 
+
     public function badge(){	
     	return $this->belongsTo(Badge::class);
     }
@@ -72,8 +73,8 @@ class Photo extends Model
         return false;
     }
 
-    public function isLiked($user){
-        if($this->users()->find($user) === null){
+    public function isLiked(){
+        if($this->users()->find(auth()->id()) === null){
             return false;
         }
         return true;

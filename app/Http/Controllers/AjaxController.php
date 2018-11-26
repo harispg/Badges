@@ -27,6 +27,9 @@ class AjaxController extends Controller
 
 
     public function changeAvatar(Request $request){
+        $this->validate($request,[
+            'photo' => 'numeric'
+        ]);
         if(Gate::allows('create-badges')){
         	$photo = Photo::find($request->photo);
         	$photo->setAsMain();
@@ -42,6 +45,11 @@ class AjaxController extends Controller
             if($lastPicture = $photo->deletePhotoAndFile());
             $badge = Badge::find($badgeId);
             $remainingPhotos = $badge->photos;
+            $length = count($remainingPhotos);
+            for ($i=0; $i < $length; $i++) { 
+                $remainingPhotos[$i] = 
+                [$remainingPhotos[$i],$remainingPhotos[$i]->isLiked(auth()->id())];
+            }
             return response()->json([$remainingPhotos, $lastPicture]);
         }
         return abort(403, 'You have no permission to change Badges');
@@ -49,8 +57,7 @@ class AjaxController extends Controller
 
     public function like(Request $request){
 
-            if(strpos($request->modelId, 'photo')){
-                dd('PHOTO');    
+            if(strpos($request->modelId, 'photo')== 0){
                 $photo = Photo::find(str_replace("photo", "", $request->modelId));
                 $photo->users()->attach(auth()->user());
                 return response()->json($photo);
@@ -63,7 +70,7 @@ class AjaxController extends Controller
     }
 
     public function unLike(Request $request){
-           if(strpos($request->modelId, 'photo')){
+           if(strpos($request->modelId, 'photo')== 0){
                 $photo = Photo::find(str_replace("photo", "", $request->modelId));
                 $photo->users()->detach(auth()->user());
                 return response()->json($photo);

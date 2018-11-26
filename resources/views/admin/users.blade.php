@@ -16,6 +16,7 @@
         <th>Last login</th>
         <th>Login Count</th>
         <th>Liked Badges</th>
+        <th>Commented Badges</th>
 
       </tr>
     </thead>
@@ -30,6 +31,19 @@
 	        <td>Ukupno: {{$user->badges()->count()}}
 	        	<div class="col">
 		        	@foreach($user->badges->chunk(4) as $set)
+		        		<div class="row">
+		        			@foreach($set as $badge)
+		        				<a class="btn btn-link" href="{{route('showBadge',[$badge->id])}}">
+		        					{{$badge->name}}
+		        				</a>
+		        			@endforeach
+			    		</div>
+			    	@endforeach
+	        	</div>
+	        </td>
+	        <td>Ukupno: {{$user->badges()->has('comments')->count()}}
+	        	<div class="col">
+		        	@foreach($user->badges()->has('comments')->get()->chunk(4) as $set)
 		        		<div class="row">
 		        			@foreach($set as $badge)
 		        				<a class="btn btn-link" href="{{route('showBadge',[$badge->id])}}">
