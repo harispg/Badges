@@ -33,8 +33,6 @@ trait RegistersUsers
 
         event(new Registered($user = $this->create($request->all())));
 
-        /*\Mail::to($user)->send(new WelcomeAgain($user));*/
-
         $this->guard()->login($user);
 
         return $this->registered($request, $user)

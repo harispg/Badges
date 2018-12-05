@@ -57,7 +57,7 @@ class AjaxController extends Controller
 
     public function like(Request $request){
 
-            if(strpos($request->modelId, 'photo')== 0){
+            if(strpos($request->modelId, 'photo')!= false){
                 $photo = Photo::find(str_replace("photo", "", $request->modelId));
                 $photo->users()->attach(auth()->user());
                 return response()->json($photo);
@@ -70,7 +70,7 @@ class AjaxController extends Controller
     }
 
     public function unLike(Request $request){
-           if(strpos($request->modelId, 'photo')== 0){
+           if(strpos($request->modelId, 'photo')!= false){
                 $photo = Photo::find(str_replace("photo", "", $request->modelId));
                 $photo->users()->detach(auth()->user());
                 return response()->json($photo);

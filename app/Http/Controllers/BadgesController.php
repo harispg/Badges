@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Badge;
+use App\User;
 use App\Photo;
+use App\Providers\BadgeCreated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
@@ -63,6 +65,8 @@ class BadgesController extends Controller
         $photo = (new Photo)->makePhotoFromFile($request->file('photo'));
 
         $badge->savePhoto($photo, true);
+
+        /*event(new BadgeCreated(User::all(), $badge->id)); this event sends Email to all users it is realy slow*/
 
         /*$photo->setAsMain();*/
 

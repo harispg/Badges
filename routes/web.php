@@ -16,6 +16,8 @@ Route::redirect('', '/home',301);
 
 Auth::routes();
 
+Auth::routes(['verify' => true]);
+
 /*Route::get('login/github', 'Auth\LoginController@redirectToGitHub')->name('githubLogin');
 Route::get('login/github/callback', 'Auth\LoginController@handleGitHubCallback');*/
 Route::get('login/facebook', 'Auth\LoginController@redirectToFacebook')->name('facebookLogin');
@@ -45,4 +47,4 @@ Route::post('ajaxUnlike', 'AjaxController@unLike');
 
 Route::get('/admin/users', 'UserActionsController@index')->name('userStatistics');
 
-Route::get('haris/{id}', 'HarisController');
+Route::get('haris/{id}', 'HarisController')->name('testiranje')->middleware('verified');

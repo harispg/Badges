@@ -125,8 +125,14 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'email' => [
+            'required' => 'Morate unijeti e-mail adresu.',
+            'email' => 'Vasa e-mail adresa mora biti valida.'
+        ],
+        'password' => [
+            'required' => 'Morate unijeti password',
+            'min' => 'Vasa :attribute mora imati minimum :min karaktera',
+            'confirmed' => 'Potvrda passworda nije tačna.'
         ],
     ],
 
@@ -141,6 +147,10 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+
+        'password' => 'lozinka',
+        'name' => 'ime',
+    ],
 
 ];

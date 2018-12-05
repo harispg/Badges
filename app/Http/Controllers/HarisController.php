@@ -18,6 +18,6 @@ class HarisController extends Controller
         //return $request->cookie('haris');
         //return view('test')->with(compact('id'));
         //return response()->file('/home/haris/Desktop/badges/public/Images/Badges/1542358651bird2.jpg');
-        return request()->user();
+        return request()->route()->getName();
     }
 }
