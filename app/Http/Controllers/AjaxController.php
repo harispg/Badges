@@ -38,39 +38,40 @@ class AjaxController extends Controller
         return abort(403, 'You have no permission to change Badges');
     }
 
+
     public function deletePhoto(Request $request){
         if(Gate::allows('create-badges')){
             $photo = Photo::find($request->photo);
             $badgeId = $photo->badge->id;
-            if($lastPicture = $photo->deletePhotoAndFile());
+            $lastPicture = $photo->deletePhotoAndFile();
             $badge = Badge::find($badgeId);
-            $remainingPhotos = $badge->photos;
-            $length = count($remainingPhotos);
-            for ($i=0; $i < $length; $i++) { 
-                $remainingPhotos[$i] = 
-                [$remainingPhotos[$i],$remainingPhotos[$i]->isLiked(auth()->id())];
-            }
-            return response()->json([$remainingPhotos, $lastPicture]);
+            $remainingPhotos = $badge->photos()->withCount(
+                [
+                    'users as liked' => function($query){
+                        $query->where('id', auth()->id());
+            }])->get()->toArray();
+            
+            return [$remainingPhotos, $lastPicture];
         }
         return abort(403, 'You have no permission to change Badges');
     }
 
-    public function like(Request $request){
+    public function likeUnlike(Request $request){
 
-            if(strpos($request->modelId, 'photo')!= false){
+            if(strpos($request->modelId, 'photo')!== false){
                 $photo = Photo::find(str_replace("photo", "", $request->modelId));
-                $photo->users()->attach(auth()->user());
+                $photo->fresh()->users()->toggle([auth()->id()]);
                 return response()->json($photo);
             }else{
                 $badge = Badge::find(str_replace("badge", "", $request->modelId));
-                $badge->users()->attach(auth()->user());
+                $badge->fresh()->users()->toggle(auth()->user());
                 return response()->json($badge);
             }
 
     }
 
-    public function unLike(Request $request){
-           if(strpos($request->modelId, 'photo')!= false){
+    /*public function unLike(Request $request){
+           if(strpos($request->modelId, 'photo')!== false){
                 $photo = Photo::find(str_replace("photo", "", $request->modelId));
                 $photo->users()->detach(auth()->user());
                 return response()->json($photo);
@@ -79,5 +80,5 @@ class AjaxController extends Controller
                 $badge->users()->detach(auth()->user());
                 return response()->json($badge);
             }
-    }
+    }*/
 }

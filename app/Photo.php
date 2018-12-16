@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Database\Eloquent\Model;
 
 class Photo extends Model
-{
+{   
 	protected $baseDir = 'Images/Badges';
 
     protected $fillable=['name', 'path', 'thumbnail_path', 'badge_id', 'main_picture'];
@@ -55,8 +55,8 @@ class Photo extends Model
     /* Deleting photo and removing files*/
 
     public function deletePhotoAndFile(){
-        if(count($this->badge->photos) != 1){    
-            if($this->main_picture){
+        if(count($this->badge->photos) != 1){   //$photo->badge()->withCount('photos')->first()->photos_count  
+            if($this->main_picture){            // ovo isto moze pomocu egarloadovanja broja odnosa.
                 $newMainPhoto = $this->badge->photos->where('main_picture', false)->first();
                 if($newMainPhoto != null){
                     $newMainPhoto->setAsMain();

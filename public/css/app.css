@@ -10477,10 +10477,11 @@ a.text-dark:focus {
 }
 
 .footer {
-  position: fixed;
+  position: relative;
   bottom: 0;
   width: 100%;
   opacity: 0.95;
+  margin-top: 2em;
   /* Set the fixed height of the footer here */
   /*height: 60px;
   line-height: 60px;*/

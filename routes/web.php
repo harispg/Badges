@@ -42,9 +42,16 @@ Route::post('badges/{badge}/comments', 'CommentsController@store')->name('addCom
 Route::post('postajax', 'AjaxController@post');
 Route::post('ajaxPhoto', 'AjaxController@changeAvatar');
 Route::post('ajaxDeletePhoto', 'AjaxController@deletePhoto');
-Route::post('ajaxLike', 'AjaxController@like');
-Route::post('ajaxUnlike', 'AjaxController@unLike');
+Route::post('ajaxLike', 'AjaxController@likeUnlike');
+//Route::post('ajaxUnlike', 'AjaxController@unLike');
 
 Route::get('/admin/users', 'UserActionsController@index')->name('userStatistics');
 
-Route::get('haris/{id}', 'HarisController')->name('testiranje')->middleware('verified');
+Route::get('haris/{id}', 'HarisController')->name('testiranje')/*->middleware('verified')*/;
+
+Route::get('test', function(){ 
+	/*$photo = App\Photo::find(1);
+	\Storage::disk('public')->put('harisKruska.jpeg', \Storage::get('kruska.jpeg'));*/
+	return class_uses_recursive(App\Http\Controllers\Auth\RegisterController::class);
+	//return storage_path('app/public');
+});

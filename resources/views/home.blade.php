@@ -10,6 +10,12 @@
 
 <div class="container">
 
+  <div class="row">
+    <div class="col">
+      {{$badges->links()}}
+    </div>
+  </div>
+
 <div class="row">
 	<div class="col" id="photoGrid">
       @foreach($badges->chunk(4) as $set)
@@ -43,10 +49,19 @@
           @endforeach
         </div>
       @endforeach
+        
     </div>
+    
 </div>
+  <div class="row">
+    <div class="col">
+      {{$badges->links()}}
+    </div>
+  </div>
 
 </div>
+
+
 @endsection
 
 @section('script')

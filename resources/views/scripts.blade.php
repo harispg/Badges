@@ -49,15 +49,15 @@
 				$("#photoGrid").html("");
 				for (var photoNumber = 0; photoNumber < photos.length; photoNumber++) {
 					if(photoNumber==0 || photoNumber%4==3){
-					if(photos[photoNumber][0].main_picture){
-						$("#avatar").attr("src", "/" + photos[photoNumber][0].thumbnail_path);
+					if(photos[photoNumber].main_picture){
+						$("#avatar").attr("src", "/" + photos[photoNumber].thumbnail_path);
 					}
 					$("#photoGrid").append("<div class='row' id='photoRow'>");	
 					$("#photoRow").append(giveHtml(photos[photoNumber]));
 						$("#photoGrid").append("</div>");
 					}else{
-						if(photos[photoNumber][0].main_picture){
-						$("#avatar").attr("src", "/" + photos[photoNumber][0].thumbnail_path);
+						if(photos[photoNumber].main_picture){
+						$("#avatar").attr("src", "/" + photos[photoNumber].thumbnail_path);
 					}
 						$("#photoRow").append(giveHtml(photos[photoNumber]));
 					}
@@ -68,14 +68,14 @@
 			function giveHtml(photo){
 					var flag='active';
 
-					if(!photo[0].main_picture){
+					if(!photo.main_picture){
 						var flag='';
 
 					}
-					if(photo[1]){
-					return "<div class='col-md-3' style='display:inline-block; width=25%'><div class='card mb-4 shadow-sm'><img class='card-img-top' src='/"+photo[0].thumbnail_path+"'id='"+photo[0].id+"'><div class='card-body'><p class='card-text'>This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p><div class='d-flex justify-content-between align-items-center'><div class='btn-group'><button type='button' class='delete btn btn-sm btn-outline-secondary' data-photo='"+photo[0].id+"'>Delete photo</button><button type='submit' class='check btn btn-sm btn-outline-primary "+flag+"' data-photo='"+photo[0].id+"'>Set Avatar</button></div>"+"<i class='fa fa-heart' data-model='photo"+photo[0].id+"'style='font-size:2em;color:red'></i>"+"</div></div></div></div>";
+					if(photo.liked == 1){
+					return "<div class='col-md-3' style='display:inline-block; width=25%'><div class='card mb-4 shadow-sm'><img class='card-img-top' src='/"+photo.thumbnail_path+"'id='"+photo.id+"'><div class='card-body'><p class='card-text'>This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p><div class='d-flex justify-content-between align-items-center'><div class='btn-group'><button type='button' class='delete btn btn-sm btn-outline-secondary' data-photo='"+photo.id+"'>Delete photo</button><button type='submit' class='check btn btn-sm btn-outline-primary "+flag+"' data-photo='"+photo.id+"'>Set Avatar</button></div>"+"<i class='fa fa-heart' data-model='photo"+photo.id+"'style='font-size:2em;color:red'></i>"+"</div></div></div></div>";
 				}else{
-					return "<div class='col-md-3' style='display:inline-block; width=25%'><div class='card mb-4 shadow-sm'><img class='card-img-top' src='/"+photo[0].thumbnail_path+"'id='"+photo[0].id+"'><div class='card-body'><p class='card-text'>This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p><div class='d-flex justify-content-between align-items-center'><div class='btn-group'><button type='button' class='delete btn btn-sm btn-outline-secondary' data-photo='"+photo[0].id+"'>Delete photo</button><button type='submit' class='check btn btn-sm btn-outline-primary "+flag+"' data-photo='"+photo[0].id+"'>Set Avatar</button></div>"+"<i class='far fa-heart' data-model='photo"+photo[0].id+"'style='font-size:2em;color:red'></i>"+"</div></div></div></div>";
+					return "<div class='col-md-3' style='display:inline-block; width=25%'><div class='card mb-4 shadow-sm'><img class='card-img-top' src='/"+photo.thumbnail_path+"'id='"+photo.id+"'><div class='card-body'><p class='card-text'>This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p><div class='d-flex justify-content-between align-items-center'><div class='btn-group'><button type='button' class='delete btn btn-sm btn-outline-secondary' data-photo='"+photo.id+"'>Delete photo</button><button type='submit' class='check btn btn-sm btn-outline-primary "+flag+"' data-photo='"+photo.id+"'>Set Avatar</button></div>"+"<i class='far fa-heart' data-model='photo"+photo.id+"'style='font-size:2em;color:red'></i>"+"</div></div></div></div>";
 				}
 			}
 		});
@@ -100,7 +100,7 @@
 			var modelId = $(this).data('model');
 			$(this).removeClass("fa fa-heart").addClass("far fa-heart");	
 			$.ajax({
-					url: '/ajaxUnlike',
+					url: '/ajaxLike',
 					method: 'POST',
 					data: {_token: CSRF_TOKEN, modelId: modelId},
 					success: function(photoId){

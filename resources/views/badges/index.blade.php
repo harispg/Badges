@@ -18,6 +18,7 @@
               </a>
             </div>
         @endforeach
+        {{$badges->links()}}
       </div>
     </div>
   </div>

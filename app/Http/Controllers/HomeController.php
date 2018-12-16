@@ -16,7 +16,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $badges = Badge::latest()->get();
+        $badges = Badge::latest()->paginate(8);
         return view('home', compact('badges'));
     }
 

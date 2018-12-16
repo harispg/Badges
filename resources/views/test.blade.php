@@ -9,7 +9,6 @@
 	<li><a href="{{route('showBadge', ['badge', $badge->id])}}">{{$badge->name}}</a></li>
 	@endforeach
 	</ul> --}}
-
-	hi {{$id}}
+<img src="{{}}" />
 </body>
 </html>

@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Gate;
 
 class BadgesController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware('auth')->except(['index', 'show']);
@@ -23,7 +22,7 @@ class BadgesController extends Controller
      */
     public function index()
     {
-        $badges = Badge::all();
+        $badges = Badge::paginate(5);
 
         return view('badges.index', compact('badges'));
     }
