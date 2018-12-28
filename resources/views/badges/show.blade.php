@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="row">
-	<div class="col-md-4 alert alert-success">
+	<div class="col-md-4">
 	    <div class="thumbnail">
 	    	<div class="display-3">
 	    		{{$badge->name}}
@@ -22,36 +22,11 @@
 	        		<input type="hidden" name="_method" value="DELETE">
 	        	</form>
 	        @endcan
-	        @if(auth()->check())
-        	  <h4>Comments:</h4>
-			    <ul class="list-group">
-			      @foreach($badge->comments as $comment)
 
-			          <li class="list-group-item">
-			            <strong>
-			              {{$comment->created_at->diffForHumans()}}:
-			            </strong>
-			            {{$comment->body}}
-			          </li>
+	        {{-- Here is encapsulated blade for showing and creating comments --}}
+	        @include('comments')
 
-			      @endforeach
-			    </ul>
-				<h2>Create your comment</h2>
-				    <form action="{{route('addComment', ['badge'=>$badge->id])}}" method=POST>
-				        {{ csrf_field() }}
-				         <div class="form-group">
-				           <textarea type="text" class="form-control" name="body" rows="8" placeholder="Your comment" required></textarea>
-				           @if($errors->has('body'))
-				           	<div class="alert alert-danger">{{$errors->first('body')}}</div>
-				           @endif
 
-				         </div>
-				         
-				         <div class="form-group">
-				           <button type="submit" name="button">Add Comment</button>
-				         </div>
-			        </form>
-	        @endif
 		</div>
 	</div>
 	<div class="col-md-8" id="photoGrid">
@@ -87,6 +62,7 @@
         </div>
       @endforeach
     </div>
+    </div>
     <div class="row">
     <div class="col-md-8 offset-4">
     	@can('create-badges')
@@ -97,7 +73,7 @@
        @endcan
    </div>
    </div>
-</div>
+
 @endsection
 
 @section('script')
