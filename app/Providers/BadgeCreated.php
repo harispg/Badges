@@ -14,13 +14,13 @@ class BadgeCreated
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    public $users;
+    public $badge;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public $users;
-    public $badge;
     public function __construct($users, $badge)
     {
         $this->users = $users;

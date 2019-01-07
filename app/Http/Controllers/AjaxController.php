@@ -70,6 +70,14 @@ class AjaxController extends Controller
 
     }
 
+    public function selected(Request $request){
+        return Badge::find($request->badge)->name;
+    }
+
+    public function selectedBadges(Request $request){
+        dd($request->all());
+    }
+
     /*public function unLike(Request $request){
            if(strpos($request->modelId, 'photo')!== false){
                 $photo = Photo::find(str_replace("photo", "", $request->modelId));

@@ -22,9 +22,7 @@ class BadgesController extends Controller
      */
     public function index()
     {
-        $badges = Badge::paginate(5);
-
-        return view('badges.index', compact('badges'));
+        return redirect()->home();
     }
 
     /**
@@ -65,7 +63,7 @@ class BadgesController extends Controller
 
         $badge->savePhoto($photo, true);
 
-        /*event(new BadgeCreated(User::all(), $badge->id)); this event sends Email to all users it is realy slow*/
+        event(new BadgeCreated(User::all(), $badge->id)); //this event sends Email to all users it is realy slow
 
         /*$photo->setAsMain();*/
 

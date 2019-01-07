@@ -7,8 +7,11 @@ use App\Mail\Badge_Created;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class SendBadgeCreatedEmail
+class SendBadgeCreatedEmail implements ShouldQueue
 {
+
+    public $timeout = 180;
+    
     /**
      * Create the event listener.
      *

@@ -43,6 +43,8 @@ Route::post('postajax', 'AjaxController@post');
 Route::post('ajaxPhoto', 'AjaxController@changeAvatar');
 Route::post('ajaxDeletePhoto', 'AjaxController@deletePhoto');
 Route::post('ajaxLike', 'AjaxController@likeUnlike');
+Route::post('ajaxSelected', 'AjaxController@selected');
+Route::post('selectedBadges', 'AjaxController@selectedBadges');
 //Route::post('ajaxUnlike', 'AjaxController@unLike');
 
 Route::get('/admin/users', 'UserActionsController@index')->name('userStatistics');
