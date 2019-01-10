@@ -23,6 +23,11 @@
 	        	</form>
 	        @endcan
 
+          <div>
+                @foreach($badge->tags as $tag)
+                  <a href="/badges/tags/{{$tag->name}}" style="padding-right: 1em">#{{$tag->name}}</a>
+                @endforeach
+          </div>
 	        {{-- Here is encapsulated blade for showing and creating comments --}}
 	        @include('comments')
 

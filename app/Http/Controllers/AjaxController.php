@@ -71,11 +71,7 @@ class AjaxController extends Controller
     }
 
     public function selected(Request $request){
-        return Badge::find($request->badge)->name;
-    }
-
-    public function selectedBadges(Request $request){
-        dd($request->all());
+        return response()->json(["badge_name"=>Badge::find($request->badge)->name, "badge_id"=> $request->badge]);
     }
 
     /*public function unLike(Request $request){

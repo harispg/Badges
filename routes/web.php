@@ -57,3 +57,5 @@ Route::get('test', function(){
 	return class_uses_recursive(App\Http\Controllers\Auth\RegisterController::class);
 	//return storage_path('app/public');
 });
+
+Route::get('badges/tags/{tag}', 'TagsController@index')->name('indexTaged');

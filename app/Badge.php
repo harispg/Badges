@@ -54,5 +54,12 @@ class Badge extends Model
         }
         return true;
     }
+    /**
+     * Relationship with tags
+     * @return relationship
+     */
+    public function tags(){
+        return $this->belongsToMany(Tag::class);
+    }
 
 }

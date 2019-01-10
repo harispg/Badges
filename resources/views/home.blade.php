@@ -34,7 +34,7 @@
                     </i>
                     <div class="form-check">
                       <label class="form-check-label">
-                        <input form="sideBarForm" name="name{{$badge->id}}" type="checkbox" data-badge="{{$badge->id}}" class="form-check-input checkbox" value="">
+                        <input form="sideBarForm" name="name{{$badge->id}}" type="checkbox" id="check_{{$badge->id}}"data-badge="{{$badge->id}}" class="form-check-input checkbox" value="">
                       </label>
                     </div>
                     @endif
@@ -85,15 +85,26 @@
 <script type="text/javascript">
   $(document).ready(function(){
     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-    $(".checkbox").change(function(){
-      $.ajax({
+    $(".checkbox").click(function(){
+      if($(this).is(":checked")){
+        console.log($(this).attr("name")+"strikirano");
+      }else{
+        console.log("NEstrikirano");
+      }
+      /*$.ajax({
         url: '/ajaxSelected',
         method: 'POST',
         data: {_token: CSRF_TOKEN, badge: $(this).data('badge')},
-        success: function(selectedBadge){
-          $("#sidebar").append("<li>"+selectedBadge+"</li>")
+        success: function(data){
+          console.log("makni");
+          if($("#check_"+data.badge_id).is(":checked")){
+            $("#sidebar").detach("#onList"+data.badge_id);
+          }else{
+            console.log("dodaj")
+          $("#sidebar").append("<li id='onList"+data.badge_id+"'>"+data.badge_name+"</li>");
+              }
         }
-      });
+      });*/
     });
   });
 
