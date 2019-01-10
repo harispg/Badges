@@ -58,22 +58,6 @@ Route::get('test', function(){
 	//return storage_path('app/public');
 });
 
+Route::post('tags','TagsController@store')->name('tagStore');
 Route::get('badges/tags/{tag}', 'TagsController@index')->name('indexTaged');
-Route::post('tags/{badge}', 'TagsController@connect');
-
-route::get('/probaTagova', function(){
-	$badge= \App\Badge::find(17);
-	return view('probaTagova', compact('badge'));
-});
-Route::post('/probaTagova', function(){
-	$tags = explode(',',request('inputic'));
-	$allTags = App\Tag::all();
-	foreach ($tags as $tag) {
-		$createdTag = \App\Tag::create([
-			'name' => $tag,
-		]);
-		$badge= \App\Badge::find(36);
-		$createdTag->badges()->attach($badge);
-	}
-	return redirect('/badges/36');
-});
+Route::post('tags/{badge}', 'TagsController@store');

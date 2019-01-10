@@ -13,26 +13,11 @@ class TagsController extends Controller
     	return view('home', compact('badges'));
     }
 
-    public function connect(Request $request, Badge $badge){
-    	$newTagsNames = array_map('strtolower',explode(',',$request->tags));
-    	$allTagsNames = Tag::all()->pluck('name')->toArray();
-    	$existingTagNames = array_values(
-    		array_intersect(
-    			array_map('strtolower',$allTagsNames), 
-    			array_map('strtolower',$newTagsNames)
-    		)
-    	);
+    public function store(Request $request, Badge $badge){
 
-    	$tagIDs = [];
-    	foreach($existingTagNames as $name){
-    		$tagIDs[] = Tag::where('name',$name)->first()->id;
-    	}
-    	dd(array_diff($newTagsNames, $existingTagNames));
+        $badge->updateAndCreateTags($request->tags);
+
+        return redirect()->route('showBadge', ['badge'=>$badge]);
     }
 
-    public function store($tag){
-    	$this->validate($tag,[
-    		'name' => 'required|unique:tags,name'
-    	]);
-    }
 }

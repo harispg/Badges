@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Tag;
 use App\User;
 use App\Photo;
 use App\Comment;
@@ -60,6 +61,29 @@ class Badge extends Model
      */
     public function tags(){
         return $this->belongsToMany(Tag::class);
+    }
+
+    public function updateAndCreateTags($tags){
+
+        $newTagsNames = array_map('strtolower',explode(',',$tags));
+        $allTagsNames = Tag::all()->pluck('name')->toArray();
+        $existingTagNames = array_values(
+            array_intersect(
+                array_map('strtolower',$allTagsNames), 
+                array_map('strtolower',$newTagsNames)
+            )
+        );
+
+        $tagIDs = [];
+        foreach($existingTagNames as $name){
+            $tagIDs[] = Tag::where('name',$name)->first()->id;
+        }
+        $tagsNamesToAdd = array_diff($newTagsNames, $existingTagNames);
+        foreach($tagsNamesToAdd as $tag){
+            $tagIDs[] = Tag::create(['name' => $tag])->id; 
+        }
+
+        $this->tags()->sync($tagIDs);
     }
 
 }
