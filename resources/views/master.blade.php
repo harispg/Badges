@@ -11,7 +11,21 @@
     <title>Album example for Bootstrap</title>
 
     <!-- Bootstrap core CSS -->
+    <!-- Stylesheet -->
+
+    <link href="/css/tagsinput.css" rel="stylesheet" type="text/css">
+
+<!-- JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="/js/manifest.js"></script>
+    <script src="/js/vendor.js"></script>
+    <script src="/js/app.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" 
+            integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" 
+            crossorigin="anonymous">
+    </script>
     
+    <script src="/js/tagsinput.js"></script>
 
     <!-- Custom styles for this template -->
     <link href="/css/app.css" rel="stylesheet">
@@ -35,10 +49,8 @@
 
     @include('partials.footer')
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="/js/manifest.js"></script>
-    <script src="/js/vendor.js"></script>
-    <script src="/js/app.js"></script>
+    
+
     @include('flash')
     @yield('script')
 
