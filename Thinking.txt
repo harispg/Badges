@@ -1,0 +1,10 @@
+
+
+User hasMany Orders
+Order belongsTo User
+
+Order hasMany Items
+Item belongsTo Order(optional)
+
+Badge hasMany Items
+Item belongsTo Badge

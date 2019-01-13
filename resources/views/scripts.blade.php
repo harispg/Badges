@@ -14,7 +14,7 @@
 			$("#photoGrid").on('click','.check',function(){
 				var photoId = "#photo" + $(this).data("photo");
 				var realPhotoId = $(this).data("photo");
-				$(".active").removeClass('btn btn-sm btn-outline-primary active').addClass('btn btn-sm btn-outline-primary');
+				$(".active, .check").removeClass('btn btn-sm btn-outline-primary active').addClass('btn btn-sm btn-outline-primary');
 				$(this).removeClass('btn btn-sm btn-outline-primary').addClass('btn btn-sm btn-outline-primary active');	
 				$.ajax({
 					url: '/ajaxPhoto',

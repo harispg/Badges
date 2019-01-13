@@ -13,6 +13,9 @@
 
 Route::get('/home','HomeController@index')->name('home');
 Route::redirect('', '/home',301);
+Route::get('/contact', function(){
+	return view('contact');
+});
 
 Auth::routes();
 

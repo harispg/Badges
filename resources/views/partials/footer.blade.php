@@ -1,7 +1,9 @@
-<footer class="footer">
-	  	<div class="navbar navbar-dark text-light bg-dark shadow-sm">
-	  		<nav>
+<footer class="navbar-nav navbar-dark bg-dark shadow-sm fixed-bottom">
+	<ul class="navbar-nav">
+		<li class="navbar-item active">
+			<a class="nav-link navbar-dark">
 				{{env('APP_NAME')}} &#169; owns this site, all rights reserved.
-	  		</nav>
-	  	</div>
+			</a>
+		</li>
+	</ul>
 </footer>

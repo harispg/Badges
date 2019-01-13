@@ -48,9 +48,9 @@
     </div>    
 </div>
 
-  <div class="row">
+  <div class="row pb-5">
     <div class="col">
-      {{$badges->links()}}
+      {{$badges->links('vendor.pagination.bootstrap-4')}}
     </div>
   </div>
 
