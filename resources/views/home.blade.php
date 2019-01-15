@@ -26,17 +26,13 @@
               <div class="card mb-4 shadow-sm">
                 <a href={{route('showBadge', ['badge' => $badge->id])}}><img class="card-img-top" src="/{{$badge->mainPhoto()->thumbnail_path}}" id="photo{{$badge->id}}"></a>
                 <div class="card-body">
-                  <p class="card-text">{{$badge->name}}</p>
+                  <h4 class="card-title">{{$badge->name}}</h4>
+                  <p class="card-text">{{$badge->description}}</p>
                   <div class="article d-flex justify-content-between align-items-center">
                     @if(auth()->check())
                     <i id="like{{$badge->id}}" data-model="badge{{$badge->id}}" class="{{$badge->isLiked(auth()->id())?'fa fa-heart':'far fa-heart'}}"
                        style="font-size:2em;color:red">
                     </i>
-                    <div class="form-check">
-                      <label class="form-check-label">
-                        <input form="sideBarForm" name="name{{$badge->id}}" type="checkbox" id="check_{{$badge->id}}"data-badge="{{$badge->id}}" class="form-check-input checkbox" value="">
-                      </label>
-                    </div>
                     @endif
                   </div>
                 </div>

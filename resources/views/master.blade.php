@@ -1,5 +1,5 @@
 
-<!doctype html>
+<!doctype html class="h-100">
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -35,16 +35,18 @@
     
   </head>
 
-  <body>
+  <body class="d-flex flex-column h-100">
 
     @include('partials.header')
 
-      <main role="main">
+      <main class="flex-shrink-0" role="main" >
+        <div class="container-fluid pt-5">
 
-        @yield('jumbotron')
+            @yield('jumbotron')
 
-        @yield('content')
+            @yield('content')
 
+        </div>
       </main>
 
     @include('partials.footer')

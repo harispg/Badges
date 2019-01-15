@@ -53,4 +53,14 @@ class User extends Authenticatable implements MustVerifyEmail
     public function orders(){
         return $this->hasMany(Order::class);
     }
+    /**
+     * Creating new order with status Creating
+     * @return object App\Order
+     */
+    public function startNewOrder(){
+        $order = $this->orders()->create();
+        $order->status()->attach(1);
+        return $order;
+    }
+
 }

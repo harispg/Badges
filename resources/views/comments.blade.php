@@ -1,5 +1,5 @@
 @if(auth()->check())
-    <h4>Comments:</h4>
+    <h4 class="mt-5">Comments:</h4>
     <ul class="list-group">
       @foreach($badge->comments as $comment)
 
@@ -24,7 +24,7 @@
 	         </div>
 	         
 	         <div class="form-group">
-	           <button type="submit" name="button">Add Comment</button>
+	           <button  class="btn btn-primary btn-outline-primary"type="submit" name="button">Add Comment</button>
 	         </div>
         </form>
 @endif

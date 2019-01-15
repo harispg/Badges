@@ -1,9 +1,9 @@
 @extends('master')
 
 @section('content')
-
 <div class="row">
 	<div class="col-md-4">
+
 	    <div class="thumbnail">
 	    	<div class="display-3">
 	    		{{$badge->name}}
@@ -13,6 +13,18 @@
 	        <div class="caption">
 	          <p id="haris">{{$badge->description}}</p>
 	        </div>
+          @if(auth()->check())
+            <form method="POST" action="/items">
+              @csrf
+              <div class="form-group">
+                <label for="qty">Quantity</label>
+                <input class="form-control" type="number" name="qty" value="1">
+                <input type="number" name="badge_id" value="{{$badge->id}}" hidden>
+                <input type="number" name="user_id" value="{{auth()->id()}}" hidden>
+                <button class="btn btn-primary form-control" type="submit">Add to Cart</button>
+              </div>
+            </form>
+          @endif
 
 	        @can('create-badges')
 	        	<a class="btn btn-primary" href="{{route('editBadge', ['id' => $badge->id])}}">Edit this badge</a>
@@ -21,19 +33,24 @@
 	        		@csrf
 	        		<input type="hidden" name="_method" value="DELETE">
 	        	</form>
-            <form method="POST" action="/tags/{{$badge->id}}">
-              @csrf
-              <label for="inputic">Tagovi</label>
-                <input name='tags' type="text" data-role="tagsinput" 
-                value="@foreach($badge->tags as $tag){{$tag->name}},@endforeach">
 
-              <button type="submit">Posalji</button>
+            <form method="POST" action="/tags/{{$badge->id}}" class="mt-4">
+              @csrf
+              <div class="form-group">
+              <label for="inputic">Type in any tags you wish:</label>
+                <input name='tags' class="form-control" type="text" data-role="tagsinput" 
+                value="@foreach($badge->tags as $tag){{$tag->name}},@endforeach">
+              </div>
+              <div class="form-group">
+                <button class="btn btn-primary btn-outline-primary mb-5" type="submit">Apply tags</button>
+              </div>
             </form>
 	        @endcan
 
           <div>
+            <h4>Tags:</h4>
                 @foreach($badge->tags as $tag)
-                  <a href="/badges/tags/{{$tag->name}}" style="padding-right: 1em">#{{$tag->name}}</a>
+                  <a href="/badges/tags/{{$tag->name}}" class="btn btn-primary outline-primary"style="padding-right: 1em">#{{$tag->name}}</a>
                 @endforeach
           </div>
 	        {{-- Here is encapsulated blade for showing and creating comments --}}
@@ -41,6 +58,15 @@
 
 
 		</div>
+    {{-- <div class="row basket">
+      <form method="post" action="/itmes">
+        <div class="form-group">
+          <label for="qty">Quantity</label>
+          <input class="form-controll" type="text" name="qty">
+          <button class="btn btn-primary" type="submit">Add to Cart</button>
+        </div>
+      </form>
+    </div> --}}
 	</div>
 	<div class="col-md-8" id="photoGrid">
       @foreach($badge->photos->chunk(4) as $set)
@@ -50,9 +76,8 @@
               <div class="card mb-4 shadow-sm">
                 {{-- <a href="/{{$photo->path}}"> --}}<img class="card-img-top" src="/{{ $photo->thumbnail_path}}" id="photo{{$photo->id}}">{{-- </a> --}}
                 <div class="card-body">
-                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
                   <div class="article d-flex justify-content-between align-items-center">
-                    <div class="btn-group col-sm-6">
+                    <div class="btn-group col-sm-6 justify-content-between">
                     	@can('create-badges')
 			              <form method="POST" action="{{route('deletePhoto', ['photo' => $photo->id])}}">
 			              	@csrf
@@ -86,7 +111,6 @@
        @endcan
    </div>
    </div>
-
 @endsection
 
 @section('script')

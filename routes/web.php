@@ -64,3 +64,5 @@ Route::get('test', function(){
 Route::post('tags','TagsController@store')->name('tagStore');
 Route::get('badges/tags/{tag}', 'TagsController@index')->name('indexTaged');
 Route::post('tags/{badge}', 'TagsController@store');
+
+Route::post('items','OrderItemsController@store' );

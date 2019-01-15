@@ -1,10 +1,18 @@
+how to create items into specific order. can a user have two active orders? No. User should have only one active or
 
+How to fetch users active order?
 
-User hasMany Orders
-Order belongsTo User
+Order should have some statuses.
+	-creating
+	-waiting for payment
+	-procesing
+	-prepared
+	-shiped
+	-delivered
 
-Order hasMany Items
-Item belongsTo Order(optional)
+	OrderStatus can haveMany orders, and orders can haveMany statuses.
+	Many To Many relationship is required. belongsToMany() - method is going to be used.
 
-Badge hasMany Items
-Item belongsTo Badge
+	When clicking add Item we can submit form with article and quantity and hit controller method in which we check if user has orderd in status creating if yes we take that orders id and provide it to items order_id property, and if no we create new order and give it status of creating.
+
+	After creating order and populating it with articles user can click checkout and order goes to waiting for payment than after the payment is made we change it to processing, than prepared than shiped and than deliverd. No problem what so ever.

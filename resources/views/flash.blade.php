@@ -3,7 +3,7 @@
     <script type="text/javascript">
     swal({
           title: "{!!session('flash_message.title')!!}",
-          text: "{!!session('flash_message.message')!!}",
+          html: "{!!session('flash_message.message')!!}",
           type: "{!!session('flash_message.level')!!}",
           showConfirmButton: false,
           timer: 2000
@@ -13,7 +13,7 @@
     <script type="text/javascript">
     swal({
           title: "{!!session('flash_message.title')!!}",
-          text: "{!!session('flash_message.message')!!}",
+          html: "{!!session('flash_message.message')!!}",
           type: "{!!session('flash_message.level')!!}",
           confirmButtonText: 'Ok'
           })
